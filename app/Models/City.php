@@ -15,4 +15,11 @@ class City extends Model
     // protected $fillable = ['name', 'population'];
     protected $guarded = [];
 
+    public function country(){
+        return $this->belongsTo(Country::class);
+    }
+
+    public function contacts(){
+        return $this->hasMany(Contact::class);
+    }
 }

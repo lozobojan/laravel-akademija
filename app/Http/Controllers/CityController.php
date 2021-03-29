@@ -21,12 +21,6 @@ class CityController extends Controller
         return view('cities.index', ['cities' => $cities] );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('cities.create');
@@ -35,21 +29,9 @@ class CityController extends Controller
 
     public function store(CityRequest $request)
     {
-//        $request->validate([
-//            'name' => 'required|min:2',
-//            'population' => 'required|numeric',
-//        ]);
-
-        City::create([ 'name' => $request->name, 'population' => $request->population ]);
+        City::query()->create([ 'name' => $request->name, 'population' => $request->population ]);
         return redirect('/cities');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     // route-model binding
     public function show(City $city)
@@ -59,25 +41,12 @@ class CityController extends Controller
         return view('cities.show', ['city' => $city] );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(City $city)
     {
         // $city = City::findOrFail($id);
         return view('cities.edit', ['city' => $city]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(CityRequest $request, City $city)
     {
         // $city = City::findOrFail($id);
@@ -88,12 +57,6 @@ class CityController extends Controller
         return redirect('/cities');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(City $city)
     {
         $city->delete();

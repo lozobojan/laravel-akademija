@@ -15,10 +15,10 @@ class CitySeeder extends Seeder
     public static function run()
     {
         $cities = [
-            ['name' => 'Podgorica', 'population' => 120000],
-            ['name' => 'Budva', 'population' => 12000],
-            ['name' => 'Tivat', 'population' => 10000],
-            ['name' => 'Berane', 'population' => 25000],
+            ['name' => 'Podgorica', 'population' => 120000, 'country_id' => 1],
+            ['name' => 'Budva', 'population' => 12000, 'country_id' => 1],
+            ['name' => 'Tivat', 'population' => 10000, 'country_id' => 1],
+            ['name' => 'Berane', 'population' => 25000, 'country_id' => 1],
         ];
 
         foreach ($cities as $city){

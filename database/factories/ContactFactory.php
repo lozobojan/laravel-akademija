@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\City;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CityFactory extends Factory
+class ContactFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = City::class;
+    protected $model = Contact::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,9 @@ class CityFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->city,
-            'population' => rand(1000, 100000),
-            'country_id' => rand(1,10)
+            'name' => $this->faker->name,
+            'phone' => $this->faker->phoneNumber,
+            'city_id' => rand(1,100)
         ];
     }
 }
