@@ -11,13 +11,8 @@ class CityController extends Controller
 
     public function index()
     {
-        // query builder
-        // $cities = \DB::table('cities')
-        //                     ->where('population', '>', '20000')
-        //                     ->get();
-
         // eloquent ORM
-        $cities = City::query()->paginate(City::PER_PAGE);
+        $cities = City::query()->with('contacts')->paginate(City::PER_PAGE);
         return view('cities.index', ['cities' => $cities] );
     }
 

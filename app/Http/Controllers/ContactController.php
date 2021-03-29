@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\City;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = Contact::query()->paginate(Contact::PER_PAGE);
-        return view('contacts.index', ['contacts' => $contacts]);
+        $cities = City::all();
+        $contacts = Contact::query()
+                                ->when($request->filter_name, function($query) use ($request) {
+                                    $term = strtolower($request->filter_name);
+                                    $query->whereRaw('lower(name) like (?)', ["%{$term}%"]);
+                                })
+                                ->when($request->filter_city, function($query) use ($request) {
+                                    $query->where('city_id', '=', $request->filter_city );
+                                })
+                                ->paginate(Contact::PER_PAGE);
+        return view('contacts.index', compact(['contacts', 'cities']));
     }
 
 
@@ -25,7 +36,6 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-
         $image_path = 'storage/' . $request->file('profile_image')->store('profile-images');
 
         $data = [
@@ -36,6 +46,9 @@ class ContactController extends Controller
         ];
 
         $new_contact = Contact::query()->create($data);
+
+        Mail::to('lozobojan@gmail.com')->send(new WelcomeMail($new_contact->name));
+
         return redirect('/contacts/'.$new_contact->id);
     }
 
