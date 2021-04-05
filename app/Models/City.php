@@ -24,7 +24,10 @@ class City extends Model
     }
 
     public function getContactsCntAttribute(){
-        return $this->contacts()->count();
+        return $this->contacts()->where('user_id', '=', auth()->id())->count();
     }
 
+    public function scopeBigCities($query){
+        $query->where('population', '>=', 25000);
+    }
 }

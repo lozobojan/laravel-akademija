@@ -22,6 +22,7 @@ class ContactController extends Controller
                                 ->when($request->filter_city, function($query) use ($request) {
                                     $query->where('city_id', '=', $request->filter_city );
                                 })
+                                ->where('user_id','=' ,auth()->id())
                                 ->paginate(Contact::PER_PAGE);
         return view('contacts.index', compact(['contacts', 'cities']));
     }
@@ -43,11 +44,12 @@ class ContactController extends Controller
             'phone' => $request->phone,
             'city_id' => $request->city_id,
             'profile_image' => $image_path,
+            'user_id' => auth()->id()
         ];
 
         $new_contact = Contact::query()->create($data);
 
-        Mail::to('lozobojan@gmail.com')->send(new WelcomeMail($new_contact->name));
+        // Mail::to('lozobojan@gmail.com')->send(new WelcomeMail($new_contact->name));
 
         return redirect('/contacts/'.$new_contact->id);
     }
@@ -55,6 +57,7 @@ class ContactController extends Controller
 
     public function show(Contact $contact)
     {
+        abort_unless($contact->user_id == auth()->id(), 403);
         return view('contacts.show', ['contact' => $contact]);
     }
 
@@ -66,7 +69,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        //
+        abort_unless($contact->user_id == auth()->id(), 403);
     }
 
     /**
@@ -78,7 +81,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        abort_unless($contact->user_id == auth()->id(), 403);
     }
 
     /**
@@ -89,6 +92,6 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        abort_unless($contact->user_id == auth()->id(), 403);
     }
 }

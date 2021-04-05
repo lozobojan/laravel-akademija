@@ -21,4 +21,12 @@ Route::delete('/contact', [TestController::class, 'deleteMessage']);
 
 Route::resource('/cities', CityController::class);
 Route::resource('/countries', CountryController::class);
-Route::resource('/contacts', ContactController::class);
+Route::resource('/contacts', ContactController::class)->middleware(['auth']);
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__ . '/auth.php';
+
