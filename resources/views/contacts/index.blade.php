@@ -8,6 +8,16 @@
         <div class="row">
             <div class="col-12">
 
+                <h3 class="text-center">
+                    {{ __('messages.welcome', ['name' => "Filip"] ) }}
+                </h3>
+
+                <hr>
+
+                <h4>
+                    {{ trans_choice('messages.apple', 5) }}
+                </h4>
+
                 <form action="/contacts" method="GET">
                     <div class="row mb-3">
                         <div class="col-4">

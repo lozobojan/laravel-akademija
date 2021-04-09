@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewContactAdded;
 use App\Mail\WelcomeMail;
 use App\Models\City;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -27,13 +29,11 @@ class ContactController extends Controller
         return view('contacts.index', compact(['contacts', 'cities']));
     }
 
-
     public function create()
     {
         $cities = City::all();
         return view('contacts.create', ['cities' => $cities]);
     }
-
 
     public function store(Request $request)
     {
@@ -49,11 +49,10 @@ class ContactController extends Controller
 
         $new_contact = Contact::query()->create($data);
 
-        // Mail::to('lozobojan@gmail.com')->send(new WelcomeMail($new_contact->name));
+        event(new NewContactAdded($new_contact));
 
         return redirect('/contacts/'.$new_contact->id);
     }
-
 
     public function show(Contact $contact)
     {

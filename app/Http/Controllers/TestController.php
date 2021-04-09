@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class TestController extends Controller
 {
@@ -18,9 +19,9 @@ class TestController extends Controller
             $search = $request->search;
         }
         return view('test', [
-            'subtitle' => "Subtitle test LARAVEL", 
-            "title" => "Naslov stranice ...", 
-            "users" => $this->users, 
+            'subtitle' => "Subtitle test LARAVEL",
+            "title" => "Naslov stranice ...",
+            "users" => $this->users,
             'search' => $search,
             "test_id" => $request->test_id,
             'show_table' => false
