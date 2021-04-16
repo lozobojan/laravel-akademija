@@ -16,6 +16,11 @@
 
                 <h4>
                     {{ trans_choice('messages.apple', 5) }}
+                    @can('create', \App\Models\Contact::class)
+                        <a href="/contacts/create">Dodaj novi kontakt</a>
+                    @elsecan
+                        <p>Nemate pravo dodavanja novog kontakta...</p>
+                    @endcan
                 </h4>
 
                 <form action="/contacts" method="GET">

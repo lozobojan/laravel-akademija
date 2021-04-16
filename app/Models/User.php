@@ -61,4 +61,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function image(){
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

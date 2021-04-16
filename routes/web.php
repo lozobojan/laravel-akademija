@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
@@ -30,12 +31,13 @@ Route::group(['middleware' => ['auth', 'language'] ], function(){
     Route::resource('/cities', CityController::class);
     Route::resource('/countries', CountryController::class);
     Route::resource('/contacts', ContactController::class);
+    Route::resource('/posts', PostController::class);
 
 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');
 
-    require __DIR__ . '/auth.php';
 });
 
+require __DIR__ . '/auth.php';
