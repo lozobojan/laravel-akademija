@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewContactAdded;
+use App\Http\Requests\ContactRequest;
 use App\Mail\WelcomeMail;
 use App\Models\City;
 use App\Models\Contact;
@@ -35,22 +36,10 @@ class ContactController extends Controller
         return view('contacts.create', ['cities' => $cities]);
     }
 
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $image_path = 'storage/' . $request->file('profile_image')->store('profile-images');
-
-        $data = [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'city_id' => $request->city_id,
-            'profile_image' => $image_path,
-            'user_id' => auth()->id()
-        ];
-
-        $new_contact = Contact::query()->create($data);
-
-        event(new NewContactAdded($new_contact));
-
+        $new_contact = Contact::query()->create($request->validated());
+        // event(new NewContactAdded($new_contact));
         return redirect('/contacts/'.$new_contact->id);
     }
 

@@ -16,6 +16,11 @@
                         </div>
                         <div class="col-3">
                             <input type="text" name="phone" placeholder="Contact phone" class="form-control" value="{{ old('phone') }}" >
+                            @error('phone')
+                            <div style="color: red;">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="col-3">
                             <select name="city_id" id="" class="form-control">
